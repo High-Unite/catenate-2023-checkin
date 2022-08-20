@@ -34,8 +34,16 @@ const scanQueue = {
   },
 };
 
-async function fetchPeople(method: "GET" | "POST" | string, data?: any) {
-  return await fetch(GSAPI_URL, {
+function paramsFromObject(params) {
+  if (!params) return ""
+  return '?' +
+  Object.keys(params)
+    .map(key => `${key}=${encodeURIComponent(params[key])}`)
+    .join('&')
+}
+
+async function fetchPeople(method: "GET" | "POST" | string, data?: any, params?: any = {}) {
+  return await fetch(GSAPI_URL+paramsFromObject(params), {
     method,
     headers: { "Content-Type": "text/plain" },
     body: data ? JSON.stringify(data) : undefined,
@@ -150,8 +158,8 @@ async function checkInAndSave(newData, queue) {
   );
 }
 
-function fetchPretty(data: any) {
-  return withTimeout(10000)(fetchPeople("POST", data));
+function fetchPretty(data: any, params: any) {
+  return withTimeout(10000)(fetchPeople("POST", data, params));
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -379,6 +387,48 @@ window.onload = async function () {
               personName.parentElement.classList.remove("is-loading");
             }
           });
+        }
+      });
+      
+      document.getElementById("checkout").addEventListener("click", (e) => {
+        e.preventDefault();
+        const check = people.indexOf(personName.value) > -1;
+        if (!check) {
+          // alert("Invalid or incomplete name");
+          // personName.value = "";
+        } else {
+          const data = {
+            name: personName.value,
+          };
+          const key = data.name;
+          const c = submits[key];
+          submits[key] = setTimeout(() => delete submits[key], 3000);
+          if (c) {
+            toast({ message: `${data.name} has already been checked in` });
+            return clearTimeout(c);
+          }
+
+          if (!fetchingPeople) {
+            personName.parentElement.classList.add("is-loading");
+          }
+          fetchingPeople.push(key);
+          updateQueue();
+          personName.value = "";
+          // personName.disabled = true;
+          // document.getElementById("submit").disabled = true;
+          fetchPretty(data, {action: "uncheck"}).then((res) => {
+            toast({
+              message: JSON.stringify(res.json()),
+              type: res.ok ? "is-success" : "is-danger"
+            })
+            // personName.disabled = false
+            // document.getElementById("submit").disabled = false
+            fetchingPeople.shift();
+            updateQueue();
+            if (fetchingPeople.length === 0) {
+              personName.parentElement.classList.remove("is-loading");
+            }
+          })
         }
       });
 
