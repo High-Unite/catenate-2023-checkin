@@ -1,0 +1,39 @@
+@import 'bulma/css/bulma.css';
+.scan-container {
+  position: relative;
+  overflow: hidden;
+/*   border-radius: 1em; */
+}
+.scan-region-highlight {
+  border-radius: 10px;
+  outline: 1000px solid rgba(0,0,0,0.2);
+  outline-offset: 10px;
+} 
+
+.scan-container .scan-flash {
+  content: '';
+  background-color: #ffffff;
+  opacity: 0;
+  position: absolute; 
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+.scan-region-highlight-svg {
+  filter: drop-shadow(0px 0px 2px rgb(0 0 0 / 0.2));
+  transition: all 150ms ease;
+}
+
+.scan-region-highlight-svg.found {
+  stroke: rgb(142, 242, 106) !important;
+}
+
+.code-outline-highlight {
+  stroke: rgba(255, 255, 255, .7) !important;
+  stroke-width: 4 !important;
+  stroke-dasharray: none !important;
+}
+
+video {
+  background-color: dimgray;
+}

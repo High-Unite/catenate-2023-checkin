@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- This is the main template for the site, with index.jsx building the content and behavior -->
+
+    <title>Czech Inn</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.0.0/animate.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="section">
+        <details open>
+          <summary>Scanner</summary>
+          <div>
+            <div class="scan-container">
+              <video></video>
+              <div class="scan-flash"></div>
+            </div>
+
+            <button id="startScan" class="button">Start Scan</button>
+            <button id="stopScan" class="button">Stop Scan</button>
+          </div>
+        </details>
+      </div>
+      <section class="section">
+        <h1 class="title is-1">Catenate 2022 Check In</h1>
+
+        <form id="checkPerson" class="block">
+          <div class="field">
+            <div class="control">
+              <input
+                id="sfPersonName"
+                type="text"
+                class="input"
+                placeholder="Manually type a name"
+                list="persons"
+                required
+              />
+            </div>
+          </div>
+          <input type="submit" id="submit" value="Submit" class="button" />
+        </form>
+
+        <ul id="loadingPeople" class="block"></ul>
+      </section>
+    </div>
+    <div class="modal" id="result-modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box" id="result">Result</div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
