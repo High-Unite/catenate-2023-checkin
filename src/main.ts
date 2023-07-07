@@ -18,7 +18,7 @@ setDefaults({
 });
 
 const GSAPI_URL =
-  "https://script.google.com/macros/s/AKfycbwl2EkVd0-LnnI3droL9bZI4Z5d8kp92GbBkeJcioaTUWnR5PWFmmJB9TZhhmEsBJ6wYA/exec";
+  "https://script.google.com/macros/s/AKfycbxxupcyQ8Dpv1nMThX-y27PJdP8c_s6hNUEeTTWFr4hK5By9G7L6AI5N_it5FWamkRm/exec";
 
 const scanQueue = {
   _value: null,
@@ -418,7 +418,7 @@ window.onload = async function () {
           // document.getElementById("submit").disabled = true;
           fetchPretty(data, {action: "uncheck"}).then((res) => {
             toast({
-              message: JSON.stringify(res.json()),
+              message: JSON.stringify(res),
               type: res.ok ? "is-success" : "is-danger"
             })
             // personName.disabled = false
